@@ -23,8 +23,6 @@ pages = [
 	},
 ]
 
-
-
 def main():
 # Iterate through the pages list and writes into the output file the title and the content
 	for count in range(len(pages)):
@@ -48,6 +46,9 @@ def apply_template(html_with_title, content):
 	index_content = content.read()
 	finished_index_page = html_with_title.replace('{{content}}', index_content)
 	return finished_index_page
+
+
+
 
 
 if __name__ == "__main__":
