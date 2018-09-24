@@ -23,34 +23,24 @@ pages = [
 	},
 ]
 
+
 def main():
 # Iterate through the pages list and writes into the output file the title and the content
 	for count in range(len(pages)):
 		content = open(pages[count]['filename'])
 		title = pages[count]['title']
-		html_with_title = apply_title(title)
-		resulting_html_for_index = apply_template(html_with_title, content)
-		open((pages[count]['output']),'w+').write(resulting_html_for_index)
+		result_page = apply_title(title, content)
+		open((pages[count]['output']),'w+').write(result_page)
 
 
-def apply_title(title):
-# Uses base.html as template to insert the title from the pages list
-	without_title = open('base.html').read()
-	template = Template(without_title)
-	with_title = template.safe_substitute(title= title)
-	return with_title
-
-
-def apply_template(html_with_title, content):
-# Using the html from apply_title to insert content
+def apply_title(title, content):
+# Uses base.html as template to insert the title and content from the pages list
+	base_page = open('base.html').read()
 	index_content = content.read()
-	finished_index_page = html_with_title.replace('{{content}}', index_content)
+	incl_content_page = base_page.replace('{{content}}', index_content)
+	finished_index_page= incl_content_page.replace('{{title}}', title)
 	return finished_index_page
-
-
-
 
 
 if __name__ == "__main__":
     main()
-
