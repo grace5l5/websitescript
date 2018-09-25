@@ -48,13 +48,11 @@ def main():
 # Iterate through the pages list and writes into the output file the title and the content
 	blog_page = blog_main()
 	open('content/blogs1.html','w+').write(blog_page)
-	# main blog page with the list of available blogs
-	# for count in range(len(pages)):
 	for page in pages:
-		content = open(pages[count]['filename'])
-		title = pages[count]['title']
+		content = open(page['filename'])
+		title = page['title']
 		result_page = apply_title(title, content)
-		open((pages[count]['output']),'w+').write(result_page)
+		open((page['output']),'w+').write(result_page)
 		
 
 def apply_title(title, content):
@@ -67,11 +65,11 @@ def apply_title(title, content):
 
 
 def blog_main():
+# Replace the date of the blogs
 	blog = open('content/blogs.html').read()
-	#for count in range(len(blog_posts)):
-	for blog_page in blog_posts:
-		blog_date = blog_posts[count]['date']
-		main_blog = blog.replace('{{date_b}}', blog_date)
+	main_blog1 = blog.replace('{{date1}}', blog_posts[0]['date'])
+	main_blog2 = main_blog1.replace('{{date2}}', blog_posts[1]['date'])
+	main_blog = main_blog2.replace('{{date3}}', blog_posts[2]['date'])
 	return main_blog
 '''
 
