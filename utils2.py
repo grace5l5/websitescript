@@ -1,12 +1,37 @@
 import glob 
 import os
+import sys
 from jinja2 import Template
 
 pages = []
 
-def main():
+def check():
+	""" Check for the number of arguments and if command is manage.py """
+	if len(sys.argv) > 1 and sys.argv[0] == 'manage2.py':
+		command = sys.argv[1]
+		if command == "build":
+			#runs the old commands
+			extract()
+			content()
+			print('Succesful', command)
+		elif command == "new":
+			# create new page new_content_page.html
+			new()
+			print('New content page created')
+		else:
+			print("Please specify ’build’ or ’new’")
+
+	""" If User input has only one argument or argument is not equal to 'manage.py' """
+	else:
+		print('''
+		Usage:
+		Rebuild site:		python manage.py build
+		Create new page:	python manage.py new
+			''')
+
+def extract():
 	all_html_files = glob.glob("content/*.html")
-	""" codes looked into the content folder and extract the file path all html files"""
+	""" codes looked into the content folder and extract the file path all html files """
 
 	for html_file in all_html_files:
 		file_path = html_file
