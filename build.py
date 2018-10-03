@@ -1,46 +1,33 @@
-from string import Template
+import glob 
+import os
 
-pages = [
-	{
-	"filename": "content/index.html", 
-	"output": "docs/index.html",
-	"title": "About me",
-	},
-	{
-	"filename": "content/projects.html",
-	"output": "docs/projects.html",
-	"title": "My Projects",
-	},
-	{
-	"filename": "content/blogs.html",
-	"output": "docs/blogs.html",
-	"title": "My blogs",
-	},
-	{
-	"filename": "content/contact.html",
-	"output": "docs/contact.html",
-	"title": "Contact me",
-	},
-]
+all_html_files = glob.glob("content/*.html")
+#codes looked into the content folder and extract the file path all html files
 
+pages = []
 
-def main():
-# Iterate through the pages list and writes into the output file the title and the content
-	for count in range(len(pages)):
-		content = open(pages[count]['filename'])
-		title = pages[count]['title']
-		result_page = apply_title(title, content)
-		open((pages[count]['output']),'w+').write(result_page)
+for html_file in all_html_files:
+	file_path = html_file
+	file_name = os.path.basename(file_path)
+	name_only, extension = os.path.splitext(file_name)
+	#extracts the file name from the extension
+	pages.append({
+	"filename": file_name,
+	"title": name_only,
+	"output": "docs/" + file_name,
+	})
 
+from jinja2 import Template
 
-def apply_title(title, content):
-# Uses base.html as template to insert the title and content from the pages list
-	base_page = open('base.html').read()
-	index_content = content.read()
-	incl_content_page = base_page.replace('{{content}}', index_content)
-	finished_index_page= incl_content_page.replace('{{title}}', title)
-	return finished_index_page
+for page in pages:
+	content = open('content/' + page['filename']).read()
+	template_html = open("base.html").read()
+	#using base.html as template
+	template = Template(template_html)
+	finish_page = template.render(
+	title = page['title'],
+	content = content,
+	pages=pages,
+	)
+	open(page['output'], 'w+').write(finish_page)
 
-
-if __name__ == "__main__":
-    main()
