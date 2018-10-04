@@ -48,24 +48,16 @@
         <div class="responsive"><i data-icon="m" class="ion-navicon-round"></i></div>
 
         {% for page in pages %}
-        <a href="{{ page.output_filename }}">{{ page.title }}</a>
+        <a href="{{ page.filename }}">{{ page.title }}</a>
         {% endfor %}
 
-<!--
-        <ul class="nav-menu list-unstyled">
-          <li><a href="index.html" class="smoothScroll">Home</a></li>
-          <li><a href="projects.html" class="smoothScroll">Projects</a></li>
-          <li><a href="blogs.html" class="smoothScroll">Blogs</a></li>
-          <li><a href="contact.html" class="smoothScroll">Contact</a></li>
-        </ul>
--->
 
       </div>
     </div>
   </nav>
   <!-- End navbar -->
 
-{{content}}
+{{ content }}
 
 
 
